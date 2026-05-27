@@ -43,7 +43,7 @@ class SampleController
                 // Eliminamos el archivo físico para no dejar basura
                 fileHelper.deleteFile(`/uploads/${req.file.filename}`);
                 // Devuelvo un error 400 (error en los datos)
-                return res.status(400).json({ message: `El BPM debe estar entre ${minBPM} y ${maxBPM}.` });
+                return res.status(400).json({ message: `BPM inválido. Ingrese un valor numérico correcto. El BPM debe estar entre ${minBPM} y ${maxBPM}.` });
             }
 
             // 2. Persistencia mediante el SP sp_create_sample
