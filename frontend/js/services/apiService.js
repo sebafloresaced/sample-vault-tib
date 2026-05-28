@@ -28,10 +28,14 @@ const apiService = {
         const result = await response.json();
 
         // Si el token expiró (401), forzamos logout automático
-        // Ejecutar logout tras 4 segundos (4000 ms) - para dar tiempo a mostrar el mensaje de error antes de redirigir
-        if (response.status === 401) setTimeout(() => authHelper.logout(), 4000);
+        // Ejecutar logout tras 2,5 segundos (2500 ms) - para dar tiempo a mostrar el mensaje de error antes de redirigir
+        if (response.status === 401) {
+            setTimeout(() => authHelper.logout(), 2500);
+            throw new Error('Sesión inválida o corrompida. Vuelva a iniciar sesión.');
+        }
 
         if (!response.ok) throw new Error(result.message || 'Error en la petición');
+        
         return result;
     }
 };
