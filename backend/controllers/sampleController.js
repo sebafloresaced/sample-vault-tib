@@ -12,6 +12,10 @@ const fs = require('fs'); // Para el readFileSync de la validación MIME
 
 const allowedTypes = ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/flac'];
 
+// Creo constantes que determinan el rango valido de BPM
+const minBPM = 20;
+const maxBPM = 300;
+
 class SampleController 
 {
     // Método para subir un sample y guardarlo en la BD
@@ -46,16 +50,24 @@ class SampleController
             const filename = req.file.filename;
             const filePath = `/uploads/${filename}`;
 
+            // Validacion del BPM
+            const bpmValue = parseInt(bpm) || 0;
+            if (bpmValue < minBPM || bpmValue > maxBPM) {
+                // Eliminamos el archivo físico para no dejar basura
+                fileHelper.deleteFile(`/uploads/${req.file.filename}`);
+                // Devuelvo un error 400 (error en los datos)
+                return res.status(400).json({ message: `BPM inválido. Ingrese un valor numérico correcto. El BPM debe estar entre ${minBPM} y ${maxBPM}.` });
+            }
+
             // 2. Persistencia mediante el SP sp_create_sample
             const insertId = await sampleRepo.create({
                 user_id: userId,
                 filename,
                 display_name,
                 category,
-                bpm: parseInt(bpm) || 0,
+                bpmValue,
                 file_path: filePath
             });
-
             res.status(201).json({ 
                 message: "Sample cargado exitosamente en la biblioteca.", 
                 id: insertId,
