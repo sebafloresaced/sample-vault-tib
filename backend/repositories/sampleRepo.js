@@ -12,10 +12,10 @@ class SampleRepository
     // Insertar un nuevo registro de sample
     async create(sampleData) 
     {
-        const { user_id, filename, display_name, category, bpm, file_path } = sampleData;
+        const { user_id, filename, display_name, category, bpmValue, file_path } = sampleData;
         const [rows] = await db.execute(
             'CALL sp_create_sample(?, ?, ?, ?, ?, ?)', 
-            [user_id, filename, display_name, category, bpm, file_path]
+            [user_id, filename, display_name, category, bpmValue, file_path]
         );
         return rows[0][0].insertId;
     }
