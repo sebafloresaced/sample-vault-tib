@@ -47,9 +47,10 @@ testUtils.createTestButton("Test Subir Sample (Simulado)", async (btn) => {
     formData.append('category', 'Drums');
     formData.append('bpm', '120');
 
-    // Simulamos un archivo WAV (binario vacío para la prueba)
-    const blob = new Blob(["Simulated Audio Content"], { type: 'audio/wav' });
-    formData.append('audioFile', blob, 'DRUM_LOOP_01.wav');
+    // Cargamos un audio real desde la carpeta test-samples
+    const fileResponse = await fetch('/test-samples/DRUM_LOOP_01.wav');
+    const blob = await fileResponse.blob();
+    formData.append('audioFile', blob, 'DRUM_LOOP_01.wav',{ type: 'audio/wav' });
 
     const response = await fetch('/api/samples/upload', {
         method: 'POST',
@@ -64,7 +65,7 @@ testUtils.createTestButton("Test Subir Sample (Simulado)", async (btn) => {
 
 // Test Coherencia BPM
 testUtils.createTestButton("Test Subir Sample con BPM invalido", async (btn) => {
-    // 1. Asegurar y guardar una sesión válida
+    // Aseguramos y guardamos una sesión válida
     await okLogin();
     const token = localStorage.getItem('test_token');
     
@@ -74,9 +75,10 @@ testUtils.createTestButton("Test Subir Sample con BPM invalido", async (btn) => 
     formData.append('category', 'Drums');
     formData.append('bpm', 'diez');
 
-    // Simulamos un archivo WAV (binario vacío para la prueba)
-    const blob = new Blob(["Simulated Audio Content"], { type: 'audio/wav' });
-    formData.append('audioFile', blob, 'DRUM_LOOP_01.wav');
+    // Cargamos un audio real desde la carpeta test-samples
+    const fileResponse = await fetch('/test-samples/DRUM_LOOP_01.wav');
+    const blob = await fileResponse.blob();
+    formData.append('audioFile', blob, 'DRUM_LOOP_01.wav',{ type: 'audio/wav' });
 
     const response = await fetch('/api/samples/upload', {
         method: 'POST',
