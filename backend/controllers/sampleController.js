@@ -7,6 +7,10 @@
 
 const fileHelper = require('../utils/fileHelper');
 const sampleRepo = require('../repositories/sampleRepo');
+const FileType = require('file-type'); // Libreria para leer los primeros bytes del archivo y detectar MIME real
+const fs = require('fs'); // Para el readFileSync de la validación MIME
+
+const allowedTypes = ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/flac'];
 
 // Creo constantes que determinan el rango valido de BPM
 const minBPM = 20;
@@ -23,6 +27,15 @@ class SampleController
             if (!req.file)
             {
                 return res.status(400).json({ message: "No se subió ningún archivo o el formato es inválido." });
+            }
+
+            // Validación MIME real (detecta el tipo real leyendo los bytes del archivo)
+            const buffer = fs.readFileSync(req.file.path);
+            const detected = await FileType.fromBuffer(buffer);
+
+            if (!detected || !allowedTypes.includes(detected.mime)) {
+                fileHelper.deleteFile(`/uploads/${req.file.filename}`);
+                return res.status(415).json({ message: "El archivo no es un audio válido" });
             }
 
             const { display_name, category, bpm } = req.body;
