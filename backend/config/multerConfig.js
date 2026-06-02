@@ -30,7 +30,7 @@ const storage = multer.diskStorage({
 
 // Filtro para aceptar solo formatos de audio compatibles con HTML5
 const fileFilter = (req, file, cb) => {
-    const allowedTypes = ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/flac'];
+    const allowedTypes = ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/flac', 'audio/vnd.wave', 'audio/x-wav'];
     if (allowedTypes.includes(file.mimetype))
     {
         cb(null, true);

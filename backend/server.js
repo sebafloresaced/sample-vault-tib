@@ -68,6 +68,9 @@ app.use('/uploads', express.static(uploadDir));
 // Como server.js está en /backend, subimos un nivel para encontrar /frontend
 app.use(express.static(path.join(__dirname, '../frontend')));
 
+// Servir archivos de prueba de samples para los tests
+app.use('/test-samples', express.static(path.join(__dirname, '../test-samples')));
+
 // --- Registrar rutas de la API ---
 app.use('/api/auth', authRoutes);
 app.use('/api/samples', sampleRoutes);
