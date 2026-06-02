@@ -10,7 +10,7 @@ const sampleRepo = require('../repositories/sampleRepo');
 const FileType = require('file-type'); // Libreria para leer los primeros bytes del archivo y detectar MIME real
 const fs = require('fs'); // Para el readFileSync de la validación MIME
 
-const allowedTypes = ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/flac'];
+const allowedTypes = ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/flac', 'audio/vnd.wave', 'audio/x-wav'];
 
 // Creo constantes que determinan el rango valido de BPM
 const minBPM = 20;
