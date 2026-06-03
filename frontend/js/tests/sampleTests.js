@@ -91,3 +91,31 @@ testUtils.createTestButton("Test Subir Sample con BPM invalido", async (btn) => 
     if (response.status == 400 && data.message.includes("BPM inválido")) 
         testUtils.setSuccess(btn);
 });
+
+testUtils.createTestButton("Test MIME type", async (btn) => {
+    // 1. Asegurar y guardar una sesión válida
+    await okLogin();
+    const token = localStorage.getItem('test_token');
+    
+    // Creamos un FormData
+    const formData = new FormData();
+    formData.append('display_name', 'Test Loop Pedagogico');
+    formData.append('category', 'Drums');
+    formData.append('bpm', '120');
+
+    // Cargamos un audio basura desde la carpeta test-samples
+    const fileResponse = await fetch('/test-samples/DRUM_LOOP_01.wav');
+    const blob = await fileResponse.blob();
+    formData.append('audioFile', blob, 'DRUM_LOOP_01.wav',{ type: 'audio/wav' });
+
+    const response = await fetch('/api/samples/upload', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData
+    });
+
+    const data = await response.json();
+    testUtils.log(data);
+    if (response.status ===415 && data.message.includes("MIME type no válido")) 
+        testUtils.setSuccess(btn);
+});
