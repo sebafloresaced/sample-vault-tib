@@ -103,7 +103,7 @@ testUtils.createTestButton("Test MIME type", async (btn) => {
     formData.append('category', 'Drums');
     formData.append('bpm', '120');
 
-    // Cargamos un audio basura desde la carpeta test-samples
+    // Simular un archivo basura
     const blob = new Blob(['Simulate audio content'], { type: 'audio/wav' });
     formData.append('audioFile', blob, 'DRUM_LOOP_01.wav',);
 
