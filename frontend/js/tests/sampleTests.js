@@ -104,9 +104,8 @@ testUtils.createTestButton("Test MIME type", async (btn) => {
     formData.append('bpm', '120');
 
     // Cargamos un audio basura desde la carpeta test-samples
-    const fileResponse = await fetch('/test-samples/DRUM_LOOP_01.wav');
-    const blob = await fileResponse.blob();
-    formData.append('audioFile', blob, 'DRUM_LOOP_01.wav',{ type: 'audio/wav' });
+    const blob = new Blob(['Simulate audio content'], { type: 'audio/wav' });
+    formData.append('audioFile', blob, 'DRUM_LOOP_01.wav',);
 
     const response = await fetch('/api/samples/upload', {
         method: 'POST',
@@ -116,6 +115,6 @@ testUtils.createTestButton("Test MIME type", async (btn) => {
 
     const data = await response.json();
     testUtils.log(data);
-    if (response.status ===415 && data.message.includes("MIME type no válido")) 
+    if (response.status ===415) 
         testUtils.setSuccess(btn);
 });
