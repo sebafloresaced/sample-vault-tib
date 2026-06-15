@@ -76,3 +76,21 @@ testUtils.createTestButton("Test de Autenticacion (Enviar peticion con token inc
         testUtils.setSuccess(btn);
     }
 });
+// TEST DE VALIDACIÓN DE CONTRASEÑA CORTA EN EL REGISTRO
+testUtils.createTestButton("Test Registro Contraseña Denasiado Corta ", async (btn) => {
+    const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: 'test_mateo', password: '123' }) // Forzamos la contraseña corta
+    });
+    
+    const data = await response.json();
+    testUtils.log(data);
+
+    // Verificamos que el servidor responda con 400 y el mensaje que pusiste en el controlador
+    if (response.status === 400 && data.message === "La contraseña debe tener al menos 6 caracteres") {
+        testUtils.setSuccess(btn);
+    } else {
+        testUtils.log("Error: Se esperaba estado 400 y el mensaje específico.");
+    }
+});
