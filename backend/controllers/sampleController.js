@@ -51,8 +51,8 @@ class SampleController
             const filePath = `/uploads/${filename}`;
 
             // Validacion del BPM
-            const bpmValue = parseInt(bpm) || 0;
-            if (bpmValue < minBPM || bpmValue > maxBPM) {
+            const bpmValue = Number(bpm);
+            if (isNaN(bpmValue) || bpmValue < minBPM || bpmValue > maxBPM) {
                 // Eliminamos el archivo físico para no dejar basura
                 fileHelper.deleteFile(`/uploads/${req.file.filename}`);
                 // Devuelvo un error 400 (error en los datos)
