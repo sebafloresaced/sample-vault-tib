@@ -77,7 +77,7 @@ testUtils.createTestButton("Test de Autenticacion (Enviar peticion con token inc
     }
 });
 // TEST DE VALIDACIÓN DE CONTRASEÑA CORTA EN EL REGISTRO
-testUtils.createTestButton("Test Registro Contraseña Denasiado Corta ", async (btn) => {
+testUtils.createTestButton("Test Registro Contraseña Demasiado Corta ", async (btn) => {
     const response = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
