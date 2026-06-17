@@ -31,7 +31,7 @@ class AuthController
 
             // Validación del test2 (largo de contraseña)
             if (password.length < 6) {
-                return res.status(400).json({ message: "La contraseña debe tener al menos 6 caracteres" });
+                return res.status(400).json({ message: "La contraseña es demasiado corta" });
             }
 
 
