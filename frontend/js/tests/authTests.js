@@ -88,7 +88,7 @@ testUtils.createTestButton("Test Registro Contraseña Denasiado Corta ", async (
     testUtils.log(data);
 
     // Verificamos que el servidor responda con 400 y el mensaje que pusiste en el controlador
-    if (response.status === 400 && data.message === "La contraseña debe tener al menos 6 caracteres") {
+    if (response.status === 400 && data.message === "La contraseña es demasiado corta") {
         testUtils.setSuccess(btn);
     } else {
         testUtils.log("Error: Se esperaba estado 400 y el mensaje específico.");
