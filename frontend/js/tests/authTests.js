@@ -87,7 +87,7 @@ testUtils.createTestButton("Test Registro Contraseña Denasiado Corta ", async (
     const data = await response.json();
     testUtils.log(data);
 
-    // Verificamos que el servidor responda con 400 y el mensaje que pusiste en el controlador
+    // Verificamos que el servidor responda con 400 y el mensaje que puesto en el controlador
     if (response.status === 400 && data.message === "La contraseña es demasiado corta") {
         testUtils.setSuccess(btn);
     } else {
